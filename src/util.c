@@ -46,3 +46,15 @@ void pos_print(Pos2 p)
 	snprintf(cy, sizeof(cy), "%f",p.y);
 	printf("x: %s, y: %s\n", cx, cy);
 }
+float pos_least(Pos2 p)
+{
+	if (abs(p.x) > abs(p.y))
+		return p.y;
+	return p.x;
+}
+float pos_most(Pos2 p)
+{
+	if (abs(p.x) < abs(p.y))
+		return p.y;
+	return p.x;
+}

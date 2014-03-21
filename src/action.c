@@ -36,7 +36,7 @@ int action_get(struct ActionObject* act, struct ActionObject** rtn, int value_ty
 	}
 	return 1;
 }
-int action_perform(struct Action* act, icmmGame* game, float dt)
+int action_perform(struct Action* act, struct icmmGame* game, float dt)
 {
 	if (act->type == ACT_NOTHING)
 	{
@@ -77,6 +77,7 @@ int action_perform(struct Action* act, icmmGame* game, float dt)
 		{
 			user->creature->pos.x += sin(user->creature->angle+angle->fvalue)*dt*mag->fvalue;
 			user->creature->pos.y += -cos(user->creature->angle+angle->fvalue)*dt*mag->fvalue;
+			tiles_rectify(game, &(user->creature->pos), &(user->creature->pos));
 		}else
 		{
 			printf("action removed due to error\n");

@@ -3,6 +3,6 @@
 #include "tile.h"
 #include "creature.h"
 
-void generateLevel(Tile*, int, Creature * creatures, int);
+void generateLevel(struct Tile*, int, Creature * creatures, int);
 
 #endif

@@ -99,19 +99,20 @@ void renderScene(void)
 
 
 const GLchar *vert_shader =
-	"#version 130\n\
-	out vec2 fragmentTexCoord;\n\
+	"#version 110\n\
+	varying vec2 fragmentTexCoord;\n\
     void main(void) {\n\
         gl_Position = gl_ProjectionMatrix * gl_ModelViewMatrix * gl_Vertex;\n\
 		fragmentTexCoord = gl_MultiTexCoord0.xy;\n\
     }";
 
 const GLchar *frag_shader =
-    "#version 130\n\
+    "#version 110\n\
 	uniform sampler2D texture0;\n\
-	in vec2 fragmentTexCoord;\n\
+	varying vec2 fragmentTexCoord;\n\
 	void main() {\n\
-		gl_FragColor = texture2D(texture0, fragmentTexCoord);\
+		vec4 color = texture2D(texture0, fragmentTexCoord);\n\
+		gl_FragColor = vec4(color.x, color.y, color.z, color.w);\n\
     }";
 	//	gl_FragColor = vec4(texture2D(texture0, fragmentTexCoord).x, 0.0, 0.0, 0.5);\
 	
@@ -168,9 +169,9 @@ int main(int argc, char **argv)
 	GLchar infoLog[1024];
 	GLsizei size;
 	glGetShaderInfoLog(vShader, 1024, &size, infoLog);
-	//printf("vert shader: %s \n", infoLog);
+	printf("vert shader: %s \n", infoLog);
 	glGetShaderInfoLog(fShader, 1024, &size, infoLog);
-	//printf("frag shader: %s \n", infoLog);
+	printf("frag shader: %s \n", infoLog);
 	//printf("shader compile error: %s \n", gluErrorString(error));
 	
 	sProgram = glCreateProgram();
