@@ -1,4 +1,4 @@
-all:
+base:
 	cc -c -o bin/stoneWall.o src/images/stoneWall.c -I./include
 	cc -c -o bin/hand.o src/images/hand.c -I./include
 	cc -c -o bin/gaseousBall.o src/images/gaseousBall.c -I./include
@@ -18,8 +18,14 @@ all:
 	cc -c -o bin/animation.o src/animation.c -DFREEGLUT_STATIC -DGLEW_STATIC -I./include
 	cc -c -o bin/vec_math.o src/vec_math.c -DFREEGLUT_STATIC -DGLEW_STATIC -I./include
 	cc -c -o bin/setup.o src/setup.c -DFREEGLUT_STATIC -DGLEW_STATIC -I./include
+
+win:
 	windres my.rc -O coff -o bin/my.res
 	cc -o bin/icmm.exe bin/*.o bin/my.res -L./lib -lfreeglut_static -lopengl32 -lwinmm -lgdi32 -lglu32
+
+lin:
+	cc -o bin/icmm bin/*.o -lGL -lGLU -lglut
+
 
 release:
 	cc -o bin/icmm.exe bin/*.o -L./lib -lfreeglut_static -lopengl32 -lwinmm -lgdi32 -lglu32 -Wl,--subsystem,windows

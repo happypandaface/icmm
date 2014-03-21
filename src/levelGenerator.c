@@ -8,7 +8,7 @@ struct Room
 	Pos2 dim;
 };
 
-void generateLevel(Tile * tiles, int num_tiles, Creature* creatures, int num_creatures)
+void generateLevel(struct Tile * tiles, int num_tiles, Creature* creatures, int num_creatures)
 {
 	int curr = 0;
 	struct Room r1;
@@ -26,7 +26,7 @@ void generateLevel(Tile * tiles, int num_tiles, Creature* creatures, int num_cre
 	struct Room path;
 	while (curr < num_tiles)
 	{
-		Tile t;
+		struct Tile t;
 		t.pos.x = curr;
 		t.pos.y = curr;
 		tiles[curr] = t;
@@ -47,16 +47,16 @@ void generateLevel(Tile * tiles, int num_tiles, Creature* creatures, int num_cre
 	}
 };
 
-int addTile(Tile *tiles, float x, float y, int curr)
+int addTile(struct Tile *tiles, float x, float y, int curr)
 {
-	Tile t;
+	struct Tile t;
 	t.pos.x = x;
 	t.pos.y = y;
 	tiles[curr] = t;
 	return 1;
 };
 
-int addRoom(Tile *tiles, struct Room rm, int curr)
+int addRoom(struct Tile *tiles, struct Room rm, int curr)
 {
 	int added = 0;
 	int x = rm.pos.x;

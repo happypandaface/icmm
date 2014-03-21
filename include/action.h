@@ -57,7 +57,7 @@ struct ActionObject
 	Item* item;
 	float fvalue;
 	int ivalue;
-	Tile* tile;
+	struct Tile* tile;
 	Pos2* pos;
 	struct Action* act;
 	
@@ -81,7 +81,7 @@ int action_check_subtype(struct Action* act, long sub_type);
 void action_add(struct Action* act, struct ActionObject* a, int role);
 // this is used by action_perform to get the values 
 int action_get(struct ActionObject* act, struct ActionObject** rtn, int value_type, int role, int num);
-int action_perform(struct Action* act, icmmGame* game, float dt);
+int action_perform(struct Action* act, struct icmmGame* game, float dt);
 // to prevent leaks
 void action_destroy(struct Action** act);
 

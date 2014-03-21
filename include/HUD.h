@@ -3,6 +3,6 @@
 
 #include "game.h"
 
-void HUD_draw(icmmGame* game, float dt);
+void HUD_draw(struct icmmGame* game, float dt);
 
 #endif

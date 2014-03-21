@@ -7,7 +7,7 @@
 #include "creature.h"
 #include "action.h"
 
-void game_loop(icmmGame* game, float dt)
+void game_loop(struct icmmGame* game, float dt)
 {
 	{
 		int i = 0;
@@ -66,7 +66,7 @@ void game_loop(icmmGame* game, float dt)
 	}
 }
 
-void game_init(icmmGame* game)
+void game_init(struct icmmGame* game)
 {
 	game->player = malloc(sizeof(*(game->player)));
 	creature_create(game->player, TYP_PLAYER);
@@ -80,7 +80,7 @@ void game_init(icmmGame* game)
 	controlObject(game->player);
 }
 
-void game_add_action(icmmGame* game, struct Action* act)
+void game_add_action(struct icmmGame* game, struct Action* act)
 {
 	struct ActionElement* ae = malloc(sizeof(*ae));
 	ae->act = act;
