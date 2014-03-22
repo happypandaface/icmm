@@ -18,8 +18,8 @@ struct ActionElement
 struct icmmGame
 {
 	Creature* player;
-	struct Tile tiles[NUM_TILES];
-	Creature creatures[NUM_CREATURES];
+	struct TileElement* tiles;
+	struct CreatureElement* creatures;
 	struct ActionElement* acts;
 };
 
@@ -27,6 +27,8 @@ struct icmmGame* mainGame;
 
 void game_loop(struct icmmGame* game, float dt);
 void game_init(struct icmmGame* game);
-void game_add_action(struct icmmGame* game, struct Action* act);
+void game_add_action(struct ActionElement** elems, struct Action* act);
+void game_add_tile(struct TileElement** elems, struct Tile* tile);
+void game_add_creature(struct CreatureElement** elems, Creature* tile);
 
 #endif

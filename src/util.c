@@ -9,6 +9,11 @@ void pos_sub(Pos2 p1, Pos2 p2, Pos2 *rtn)
 	rtn->y = p1.y - p2.y;
 }
 
+float pos_angle_rel(Pos2 p)
+{
+	return atan2(p.y, p.x);
+}
+
 float pos_len_sq(Pos2 p)
 {
 	return p.x*p.x+p.y*p.y;
@@ -44,7 +49,7 @@ void pos_print(Pos2 p)
 	snprintf(cx, sizeof(cx), "%f",p.x);
 	char cy[48];
 	snprintf(cy, sizeof(cy), "%f",p.y);
-	printf("x: %s, y: %s\n", cx, cy);
+	fprintf(stderr, "x: %s, y: %s\n", cx, cy);
 }
 float pos_least(Pos2 p)
 {

@@ -9,6 +9,7 @@
 
 void game_loop(struct icmmGame* game, float dt)
 {
+	/*
 	{
 		int i = 0;
 		while (i < NUM_CREATURES)
@@ -28,25 +29,7 @@ void game_loop(struct icmmGame* game, float dt)
 			++i;
 		}
 	}
-	{
-		int i = 0;
-		while (i < NUM_CREATURES)
-		{
-			if (creature_check_sub_type(&(game->creatures[i]), STYP_EXISTS) == 0)
-			{
-				Pos2 dst;
-				pos_sub(game->player->pos, game->creatures[i].pos, &dst);
-				float len = pos_len(dst);
-				if (len > 1)
-				{
-					pos_nor(dst, &dst);
-					pos_mul(dst, dt*2.0f, &dst);
-					pos_add(game->creatures[i].pos, dst, &(game->creatures[i].pos));
-				}
-			}
-			++i;
-		}
-	}
+	*/
 	{
 		struct ActionElement* currAction = game->acts;
 		struct ActionElement* lastAction = NULL;
@@ -68,22 +51,44 @@ void game_loop(struct icmmGame* game, float dt)
 
 void game_init(struct icmmGame* game)
 {
+	game->acts = NULL;
+	game->tiles = NULL;
+	
 	game->player = malloc(sizeof(*(game->player)));
 	creature_create(game->player, TYP_PLAYER);
 	game->player->inv = malloc(sizeof(*game->player->inv));
 	game->player->inv->item = malloc(sizeof(*game->player->inv->item));
 	item_create(game->player->inv->item, ITM_HAND);
-	generateLevel(game->tiles, NUM_TILES, game->creatures, NUM_CREATURES);
-	
-	game->acts = NULL;
 	
 	controlObject(game->player);
+	
+	generateLevel(&(game->tiles), NUM_TILES, &(game->creatures), NUM_CREATURES, &(game->acts));
+	
+	printf("game init'd\n");
 }
 
-void game_add_action(struct icmmGame* game, struct Action* act)
+void game_add_action(struct ActionElement** elems, struct Action* act)
 {
 	struct ActionElement* ae = malloc(sizeof(*ae));
 	ae->act = act;
-	ae->next = game->acts;
-	game->acts = ae;
+	ae->next = *elems;
+	(*elems) = ae;
+}
+
+void game_add_tile(struct TileElement** elems, struct Tile* elem)
+{
+	struct TileElement* elemObj = malloc(sizeof(*elemObj));
+	elemObj->elem = elem;
+	printf("about to blow!\n");
+	elemObj->next = *elems;
+	pos_print(elemObj->elem->pos);
+	(*elems) = elemObj;
+}
+
+void game_add_creature(struct CreatureElement** elems, Creature* elem)
+{
+	struct CreatureElement* elemObj = malloc(sizeof(*elemObj));
+	elemObj->elem = elem;
+	pos_print(elemObj->elem->pos);
+	(*elems) = elemObj;
 }

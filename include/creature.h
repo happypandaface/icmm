@@ -28,6 +28,13 @@ typedef struct {
 	float angle;
 }Creature;
 
+struct CreatureElement;
+struct CreatureElement
+{
+	Creature* elem;
+	struct CreatureElement* next;
+};
+
 void creature_draw(Creature* go, float viewAngle);
 int creature_create(Creature* c, int type);
 int creature_check_sub_type(Creature* go, long stype);

@@ -12,10 +12,15 @@ struct Tile
 	Pos2 pos;
 };
 
-#include "game.h"
+struct TileElement;
+struct TileElement
+{
+	struct Tile* elem;
+	struct TileElement* next;
+};
 
 void tile_draw(struct Tile* tile);
-int tiles_rectify(struct icmmGame* game, Pos2* in, Pos2* out);
+int tiles_rectify(struct TileElement** tiles, Pos2* in, Pos2* out);
 int tile_rectify(struct Tile* tile, Pos2* in, Pos2* out);
 
 #endif

@@ -77,7 +77,33 @@ int action_perform(struct Action* act, struct icmmGame* game, float dt)
 		{
 			user->creature->pos.x += sin(user->creature->angle+angle->fvalue)*dt*mag->fvalue;
 			user->creature->pos.y += -cos(user->creature->angle+angle->fvalue)*dt*mag->fvalue;
-			tiles_rectify(game, &(user->creature->pos), &(user->creature->pos));
+			tiles_rectify(&(game->tiles), &(user->creature->pos), &(user->creature->pos));
+		}else
+		{
+			printf("action removed due to error\n");
+			return 2;
+		}
+	}else
+	if (act->type == ACT_FOLLOW)
+	{
+		struct ActionObject* mag;
+		struct ActionObject* target;
+		struct ActionObject* user;
+		int err = 0;
+		err += action_get(act->actObj, &target, ACT_OBJ_CREATURE, ACT_ROLE_TARGET, 0);
+		err += action_get(act->actObj, &mag, ACT_OBJ_FLOAT, ACT_ROLE_MAGNITUDE, 0);
+		err += action_get(act->actObj, &user, ACT_OBJ_CREATURE, ACT_ROLE_USER, 0);
+		if (err == 0)
+		{
+			Pos2 dst;
+			pos_sub(user->creature->pos, target->creature->pos, &dst);
+			float len = pos_len(dst);
+			if (len > 1)
+			{
+				pos_nor(dst, &dst);
+				pos_mul(dst, dt*mag->fvalue, &dst);
+				pos_add(target->creature->pos, dst, &(target->creature->pos));
+			}
 		}else
 		{
 			printf("action removed due to error\n");

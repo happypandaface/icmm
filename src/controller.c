@@ -96,7 +96,7 @@ void controlObject(Creature *go)
 	// make sure it's disabled at the start
 	action_add_subtype(move_act, SACT_DISABLED);
 	
-	game_add_action(mainGame, move_act);
+	game_add_action(&(mainGame->acts), move_act);
 }
 
 void controlCamera()
@@ -168,7 +168,7 @@ void normalDown(unsigned char key, int x, int y)
 			action_obj_create(&maxTime, ACT_OBJ_FLOAT);
 			maxTime->fvalue = 0.3f;
 			action_add(punch, maxTime, ACT_ROLE_ACTIVATE);
-			game_add_action(mainGame, punch);
+			game_add_action(&(mainGame->acts), punch);
 		}
 	}
 }

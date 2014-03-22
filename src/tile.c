@@ -30,18 +30,18 @@ void tile_draw(struct Tile* tile)
 		tile->pos.y*TILE_HEIGHT*2);
 }
 
-int tiles_rectify(struct icmmGame* game, Pos2* in, Pos2* out)
+int tiles_rectify(struct TileElement** tiles, Pos2* in, Pos2* out)
 {
 	Pos2 dim;
 	Pos2 totDiff;
 	dim.x = 1;
 	dim.y = 1;
 	float lowest = -1.0f;
-	int i = 0;
-	while (i < NUM_TILES)
+	struct TileElement* currTileElem = *tiles;
+	while (currTileElem != NULL)
 	{
 		Pos2 diff;
-		pos_sub(*in, game->tiles[i].pos, &diff);
+		pos_sub(*in, currTileElem->elem->pos, &diff);
 		if (diff.x > 0.0f)
 			if (diff.x <= 1.0f)
 				diff.x = 0.0f;
@@ -66,7 +66,7 @@ int tiles_rectify(struct icmmGame* game, Pos2* in, Pos2* out)
 			totDiff.x = diff.x;
 			totDiff.y = diff.y;
 		}
-		++i;
+		currTileElem = currTileElem->next;
 	}
 	//fprintf(stderr, "tiles\n");
 	//if (lowest == 0.0f)

@@ -8,6 +8,7 @@ typedef struct
 } Pos2;
 
 void pos_sub(Pos2 p1, Pos2 p2, Pos2 *rtn);
+float pos_angle_rel(Pos2 p);
 float pos_len_sq(Pos2 p);
 float pos_len(Pos2 p);
 void pos_nor(Pos2 p1, Pos2 *rtn);

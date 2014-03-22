@@ -14,6 +14,7 @@
 #define ACT_NOTHING 0
 #define ACT_PUNCH 1
 #define ACT_MOVE 2
+#define ACT_FOLLOW 3
 
 // action sub types
 #define SACT_EXISTS 1 << 0

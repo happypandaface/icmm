@@ -65,11 +65,11 @@ void renderScene(void)
 	{
 		glBindTexture(GL_TEXTURE_2D, swTexture);
 		glBegin(GL_QUADS);
-		int i = 0;
-		while (i < NUM_TILES)
+		struct TileElement* currTileElem = mainGame->tiles;
+		while (currTileElem != NULL)
 		{
-			tile_draw(&(mainGame->tiles[i]));
-			++i;
+			tile_draw(currTileElem->elem);
+			currTileElem = currTileElem->next;
 		}
 		glEnd();
 	}
@@ -79,12 +79,12 @@ void renderScene(void)
 		float degs = getCameraAngle();
 		//
 		//printf("angle: %f\n", degs);
-		int i = 0;
-		while (i < NUM_CREATURES)
+		struct CreatureElement* creatElem = mainGame->creatures;
+		while (creatElem != NULL)
 		{
-			if (creature_check_sub_type(&(mainGame->creatures[i]), STYP_EXISTS) == 0)
-				creature_draw(&(mainGame->creatures[i]), degs);
-			++i;
+			if (creature_check_sub_type(creatElem->elem, STYP_EXISTS) == 0)
+				creature_draw(creatElem->elem, degs);
+			creatElem = creatElem->next;
 		}
 	}
 	HUD_draw(mainGame, dt);
@@ -142,20 +142,27 @@ int main(int argc, char **argv)
 	game_init(mainGame);
 	controller_init();
 	
+	printf("check0\n");
+	
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(200,100);
 	glutInitWindowSize(320,320);
 	glutCreateWindow("rhm");
 	
+	printf("check1\n");
+	
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
 	glutIdleFunc(renderScene);
+	
+	printf("check2\n");
 	
 	glutKeyboardFunc(normalDown);
 	glutKeyboardUpFunc(normalUp);
 	glutSpecialFunc(specialDown);
 	glutSpecialUpFunc(specialUp);
 	
+	printf("check3\n");
 	
 	GLenum err = glewInit();
 	GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
@@ -165,6 +172,8 @@ int main(int argc, char **argv)
 	glCompileShader(vShader);
 	glCompileShader(fShader);
 	
+	printf("check4\n");
+	
 	int error = glGetError();
 	GLchar infoLog[1024];
 	GLsizei size;
@@ -173,6 +182,8 @@ int main(int argc, char **argv)
 	glGetShaderInfoLog(fShader, 1024, &size, infoLog);
 	printf("frag shader: %s \n", infoLog);
 	//printf("shader compile error: %s \n", gluErrorString(error));
+	
+	printf("check5\n");
 	
 	sProgram = glCreateProgram();
 	glAttachShader(sProgram, vShader);
@@ -205,6 +216,7 @@ int main(int argc, char **argv)
 	set_instance(anm_gas_ball, &animInst);
 	
 	glutMainLoop();
+	printf("check6\n");
 	
 	return 1;
 }
