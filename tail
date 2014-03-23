@@ -1,0 +1,6 @@
+cc -c -o bin/stoneWall.o src/images/stoneWall.c -I./include
+cc -c -o bin/hand.o src/images/hand.c -I./include
+cc -c -o bin/gaseousBall.o src/images/gaseousBall.c -I./include
+cc -c -o bin/gaseousBall2.o src/images/gaseousBall2.c -I./include
+cc -c -o bin/punchFist.o src/images/punchFist.c -I./include
+cc -c -o bin/levelGenerator.o src/levelGenerator.c -I./include

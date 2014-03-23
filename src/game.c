@@ -38,10 +38,22 @@ void game_loop(struct icmmGame* game, float dt)
 			if (action_check_subtype(currAction->act, SACT_DISABLED) != 0)
 			{
 				if (action_perform(currAction->act, game, dt) == 1)
+				{
 					if (lastAction == NULL)// remove the action
-						game->acts = currAction->next;
-					else
+					{
+						lastAction = game->acts;
+						if (game->acts == currAction)
+						{
+							game->acts = currAction->next;
+						}else
+						{
+							while(lastAction->next != currAction)
+								lastAction = lastAction->next;
+							lastAction->next = currAction->next;
+						}
+					}else
 						lastAction->next = currAction->next;
+				}
 			}
 			lastAction = currAction;
 			currAction = currAction->next;
@@ -53,6 +65,8 @@ void game_init(struct icmmGame* game)
 {
 	game->acts = NULL;
 	game->tiles = NULL;
+	game->creatures = NULL;
+	game->items = NULL;
 	
 	game->player = malloc(sizeof(*(game->player)));
 	creature_create(game->player, TYP_PLAYER);
@@ -85,10 +99,26 @@ void game_add_tile(struct TileElement** elems, struct Tile* elem)
 	(*elems) = elemObj;
 }
 
-void game_add_creature(struct CreatureElement** elems, Creature* elem)
+void game_add_creature(struct CreatureElement** elems, struct Creature* elem)
 {
 	struct CreatureElement* elemObj = malloc(sizeof(*elemObj));
 	elemObj->elem = elem;
+	elemObj->next = *elems;
 	pos_print(elemObj->elem->pos);
 	(*elems) = elemObj;
+}
+
+void game_remove_creature(struct icmmGame* game, struct Creature* creat)
+{
+	if (game->creatures->elem == creat)
+	{
+		game->creatures = game->creatures->next;
+	}else
+	{
+		struct CreatureElement* creatElem = game->creatures;
+		while(creatElem->next->elem != creat)
+			creatElem = creatElem->next;
+		creatElem->next = creatElem->next->next;
+	}
+
 }

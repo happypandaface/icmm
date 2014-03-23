@@ -18,4 +18,7 @@ void pos_print(Pos2 p);
 float pos_least(Pos2 p);
 float pos_most(Pos2 p);
 
+float nor_rad(float a);
+float compare_rad(float a1, float a2);
+
 #endif

@@ -21,5 +21,11 @@ void load_texture(int tex)
 		case TEX_PUNCH:
 			glBindTexture(GL_TEXTURE_2D, punchTexture);
 			break;
+		case TEX_BLUE_JELLY_1:
+			glBindTexture(GL_TEXTURE_2D, bJelly1Texture);
+			break;
+		case TEX_BLUE_JELLY_2:
+			glBindTexture(GL_TEXTURE_2D, bJelly2Texture);
+			break;
 	}
 }

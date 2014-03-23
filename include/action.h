@@ -15,6 +15,7 @@
 #define ACT_PUNCH 1
 #define ACT_MOVE 2
 #define ACT_FOLLOW 3
+#define ACT_DAMAGE 4
 
 // action sub types
 #define SACT_EXISTS 1 << 0
@@ -36,13 +37,14 @@
 #define ACT_ROLE_ACTIVATE 11
 #define ACT_ROLE_MAGNITUDE 12
 #define ACT_ROLE_ANGLE 13
+#define ACT_ROLE_TYPE 14
 
 // action object values IDS
 #define ACT_OBJ_NOTHING 0
 #define ACT_OBJ_CREATURE 1
 #define ACT_OBJ_ITEM 2
 #define ACT_OBJ_FLOAT 3
-#define ACT_OBJ_INT 4
+#define ACT_OBJ_LONG 4
 #define ACT_OBJ_TILE 5
 #define ACT_OBJ_POS 6
 #define ACT_OBJ_ACTION 7
@@ -54,10 +56,10 @@ struct ActionObject
 {
 	int role;
 	int value_type;
-	Creature* creature;
-	Item* item;
+	struct Creature* creature;
+	struct Item* item;
 	float fvalue;
-	int ivalue;
+	long lvalue;
 	struct Tile* tile;
 	Pos2* pos;
 	struct Action* act;
@@ -85,5 +87,27 @@ int action_get(struct ActionObject* act, struct ActionObject** rtn, int value_ty
 int action_perform(struct Action* act, struct icmmGame* game, float dt);
 // to prevent leaks
 void action_destroy(struct Action** act);
+
+int objects_get_cone(
+	struct icmmGame* game, 
+	Pos2 start, 
+	float dir, 
+	float angle, 
+	float startDist, 
+	float endDist, 
+	int value_type, 
+	int object_type, 
+	long sub_type, 
+	struct ActionObject** rtn);
+
+int objects_get_ring(
+	struct icmmGame* game, 
+	Pos2 start, 
+	float startDist, 
+	float endDist, 
+	int value_type, 
+	int object_type, 
+	long sub_type, 
+	struct ActionObject** rtn);
 
 #endif

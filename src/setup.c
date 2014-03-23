@@ -62,28 +62,37 @@ void renderScene(void)
 	glEnable(GL_TEXTURE_2D);
 	
 	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, swTexture);
 	{
-		glBindTexture(GL_TEXTURE_2D, swTexture);
-		glBegin(GL_QUADS);
 		struct TileElement* currTileElem = mainGame->tiles;
 		while (currTileElem != NULL)
 		{
 			tile_draw(currTileElem->elem);
 			currTileElem = currTileElem->next;
 		}
-		glEnd();
 	}
 	{
-		step_animation(&animInst, dt);
-		load_texture(animInst.currentFrame->texture);
+		//step_animation(&animInst, dt);
+		//load_texture(animInst.currentFrame->texture);
 		float degs = getCameraAngle();
 		//
 		//printf("angle: %f\n", degs);
+		struct ItemElement* itElem = mainGame->items;
+		while (itElem != NULL)
+		{
+			
+			if (
+				item_check_sub_type(itElem->elem, SITM_EXISTS) == 0 &&
+				item_check_sub_type(itElem->elem, SITM_IN_WORLD) == 0)
+				item_draw_world(itElem->elem, degs, dt);
+			itElem = itElem->next;
+		}
 		struct CreatureElement* creatElem = mainGame->creatures;
 		while (creatElem != NULL)
 		{
+			
 			if (creature_check_sub_type(creatElem->elem, STYP_EXISTS) == 0)
-				creature_draw(creatElem->elem, degs);
+				creature_draw(creatElem->elem, degs, dt);
 			creatElem = creatElem->next;
 		}
 	}
@@ -137,6 +146,9 @@ void dispose()
 int main(int argc, char **argv)
 {
 	glutInit(&argc, argv);
+	
+	setup_animations();
+	//set_instance(anm_gas_ball, &animInst);
 	
 	mainGame = malloc(sizeof(*mainGame));
 	game_init(mainGame);
@@ -196,6 +208,9 @@ int main(int argc, char **argv)
 	makeTexture(&gaseousBall2, &gb2Texture);
 	makeTexture(&hand, &handTexture);
 	makeTexture(&punchFist, &punchTexture);
+	makeTexture(&blueJelly, &bJelly1Texture);
+	makeTexture(&blueJelly2, &bJelly2Texture);
+	makeTexture(&deadJelly, &dJellyTexture);
 	
 	/*
 	int i = 0;
@@ -212,8 +227,6 @@ int main(int argc, char **argv)
 	new_animation(&anim);
 	add_frame(&anim, TEX_GASEOUS_BALL_1, 1.0f);
 	add_frame(&anim, TEX_GASEOUS_BALL_2, 1.0f);*/
-	setup_animations();
-	set_instance(anm_gas_ball, &animInst);
 	
 	glutMainLoop();
 	printf("check6\n");

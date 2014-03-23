@@ -23,6 +23,7 @@ typedef struct
 
 Animation* anm_gas_ball;
 Animation* anm_hand_punch;
+Animation* anm_blue_jelly_jiggle;
 
 typedef struct
 {

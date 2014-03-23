@@ -15,6 +15,8 @@ long rightKey = 1 << 3;
 struct Action* move_act;
 struct ActionObject* move_angle;
 
+struct Creature* controlled;
+
 void controller_init()
 {
 	//move_act = malloc(sizeof(*move_act));
@@ -73,7 +75,7 @@ void updateController(float dt)
 	}
 }
 
-void controlObject(Creature *go)
+void controlObject(struct Creature *go)
 {
 	controlled = go;
 	
@@ -146,6 +148,19 @@ void controlCamera()
 	//		x+lx, 1.0f,  z+lz,
 	//		0.0f, 1.0f,  0.0f);
 }
+void normalUp(unsigned char key, int x, int y)
+{
+	if (key == 119)//w
+		;
+	if (key == 113)//q
+		;
+	if (key == 109)//e
+		;
+	if (key == 27)
+		exit(0);
+	if (key == 32)
+		punching = 0;
+}
 
 void normalDown(unsigned char key, int x, int y)
 {
@@ -153,32 +168,9 @@ void normalDown(unsigned char key, int x, int y)
 	{
 		if (controlled->inv->item->anim == NULL)
 		{
-			set_animation(&(controlled->inv->item->anim), ANM_PUNCH);
-			struct Action* punch;
-			action_create(&punch, ACT_PUNCH);
-			struct ActionObject* user;
-			action_obj_create(&user, ACT_OBJ_CREATURE);
-			user->creature = controlled;
-			action_add(punch, user, ACT_ROLE_USER);
-			struct ActionObject* timer;
-			action_obj_create(&timer, ACT_OBJ_FLOAT);
-			timer->fvalue = 0.0f;
-			action_add(punch, timer, ACT_ROLE_TIMER);
-			struct ActionObject* maxTime;
-			action_obj_create(&maxTime, ACT_OBJ_FLOAT);
-			maxTime->fvalue = 0.3f;
-			action_add(punch, maxTime, ACT_ROLE_ACTIVATE);
-			game_add_action(&(mainGame->acts), punch);
+			item_use(controlled, controlled->inv->item);
 		}
 	}
-}
-
-void normalUp(unsigned char key, int x, int y)
-{
-	if (key == 27)
-		exit(0);
-	if (key == 32)
-		punching = 0;
 }
 
 void specialDown(int key, int xx, int yy)

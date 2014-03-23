@@ -7,7 +7,7 @@ struct InvSlot;
 
 struct InvSlot
 {
-	Item* item;
+	struct Item* item;
 	struct InvSlot* last;
 	struct InvSlot* next;
 };

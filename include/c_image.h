@@ -14,4 +14,8 @@ cImage gaseousBall;
 cImage gaseousBall2;
 cImage hand;
 cImage punchFist;
+cImage blueJelly;
+cImage blueJelly2;
+cImage deadJelly;
+
 #endif

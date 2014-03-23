@@ -6,8 +6,9 @@
 
 void setup_animations()
 {
-	anm_gas_ball = malloc(sizeof(anm_gas_ball));
-	anm_hand_punch = malloc(sizeof(anm_hand_punch));
+	anm_gas_ball = malloc(sizeof(*anm_gas_ball));
+	anm_hand_punch = malloc(sizeof(*anm_hand_punch));
+	anm_blue_jelly_jiggle = malloc(sizeof(*anm_blue_jelly_jiggle));
 	
 	new_animation(anm_gas_ball);
 	add_frame(anm_gas_ball, TEX_GASEOUS_BALL_1, 1.0f);
@@ -16,6 +17,10 @@ void setup_animations()
 	new_animation(anm_hand_punch);
 	add_frame(anm_hand_punch, TEX_FIST, 0.1f);
 	add_frame(anm_hand_punch, TEX_PUNCH, 0.4f);
+
+	new_animation(anm_blue_jelly_jiggle);
+	add_frame(anm_blue_jelly_jiggle, TEX_BLUE_JELLY_1, 1.0f);
+	add_frame(anm_blue_jelly_jiggle, TEX_BLUE_JELLY_2, 1.0f);
 }
 
 void new_animation(Animation* anim)

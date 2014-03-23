@@ -17,10 +17,11 @@ struct ActionElement
 
 struct icmmGame
 {
-	Creature* player;
+	struct Creature* player;
 	struct TileElement* tiles;
 	struct CreatureElement* creatures;
 	struct ActionElement* acts;
+	struct ItemElement* items;
 };
 
 struct icmmGame* mainGame;
@@ -29,6 +30,9 @@ void game_loop(struct icmmGame* game, float dt);
 void game_init(struct icmmGame* game);
 void game_add_action(struct ActionElement** elems, struct Action* act);
 void game_add_tile(struct TileElement** elems, struct Tile* tile);
-void game_add_creature(struct CreatureElement** elems, Creature* tile);
+void game_add_creature(struct CreatureElement** elems, struct Creature* tile);
+void game_add_item(struct ItemElement** elems, struct Item* it);
+void game_remove_item(struct ItemElement** elems, struct Item* it);
+void game_remove_creature(struct icmmGame* game, struct Creature* creat);
 
 #endif

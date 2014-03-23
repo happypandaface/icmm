@@ -6,8 +6,11 @@
 #include <GL/gl.h>
 #include <GL/freeglut.h>
 
+#include "textures.h"
+
 void tile_draw(struct Tile* tile)
 {
+	glBegin(GL_QUADS);
 	glTexCoord2f (0, 0);
 	glVertex3f(
 		tile->pos.x*TILE_WIDTH*2,
@@ -28,6 +31,7 @@ void tile_draw(struct Tile* tile)
 		tile->pos.x*TILE_WIDTH*2+TILE_WIDTH*2,
 		-TILE_DEPTH,
 		tile->pos.y*TILE_HEIGHT*2);
+	glEnd();
 }
 
 int tiles_rectify(struct TileElement** tiles, Pos2* in, Pos2* out)

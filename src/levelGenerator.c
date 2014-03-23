@@ -133,13 +133,19 @@ void generateLevel(struct TileElement** tiles, int num_tiles, struct CreatureEle
 	struct CaveRoom cr1;
 	create_cave_room(&cr1, 0, 0, 7, 0, 3, 2, 4, 5);
 	addCaveRoom(tiles, &cr1, curr);
-	
-	Creature *creat = malloc(sizeof(*creat));
+	struct Creature *creat = malloc(sizeof(*creat));
 	creature_create(creat, TYP_GAS_BALL);
 	creat->pos.x = 2;
 	creat->pos.y = 4;
 	creature_add_sub_type(creat, STYP_EXISTS);
 	game_add_creature(creatures, creat);
+	
+	struct Creature *bj = malloc(sizeof(*bj));
+	creature_create(bj, TYP_BLUE_JELLY);
+	bj->pos.x = 4;
+	bj->pos.y = 4;
+	creature_add_sub_type(bj, STYP_EXISTS);
+	game_add_creature(creatures, bj);
 	
 	struct Action* follow_act;
 	action_create(&follow_act, ACT_FOLLOW);

@@ -1,0 +1,32 @@
+ADDING IMAGE:
+make sure the c source file doesn't have gluints and stuff
+after exporting to c source, (or hex'ing a RAW file (UNTESTED)
+change the start of c source file so it looks like one of the
+ones, just include c_image.h and change the struct to a cImage
+and give it a name then mod c_image.h to include the name you
+gave it, now mod textures.h to have a gluint for the new image
+also make a new enum for it. then mod loadTexture in 
+textures.c and use the new enum to load the texture.
+
+TODO:
+I'm writing this because I'm about to work on another project
+but I really like this project and I want to come back to it.
+I've got a notebook full of stuff planned, but I'll just 
+put the next step here, items.
+The idea is that you use "q" and "e" to cycle through your items
+there's already an item class, which hand inherits from.
+You use "space" "z" and "x" to use/drop/throw your items. 
+Long press space uses it on your self (short uses it in front
+of you), x is alternate (hand's alternate is to pick up) alternate
+has long press too. then short z drops and long z throws.
+So, you should start by making a ItemElement for the inventory,
+all creatures should have this, it's a linear linked list of 
+items.
+Oh wait, what I was going to do before this is death animations
+and corpses. Draw a few frames for the jelly and the gas ball
+and make them create a "corpse" object on death with a single
+run animation (yet to be programmed) then when you hit z with
+your hand on the corpse you can pick up their items, scrolling
+through with "q" and "e" until you select on with space or "z"
+out of it.
+

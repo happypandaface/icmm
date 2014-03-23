@@ -1,5 +1,5 @@
 #include "item.h"
-#include "textures.h"
+
 
 #include <stdio.h>
 
@@ -9,7 +9,10 @@
 
 #include <math.h>
 
-void item_create(Item* it, int type)
+#include "textures.h"
+#include "action.h"
+
+void item_create(struct Item* it, int type)
 {
 	it->type = type;
 	it->sub_type = SITM_EXISTS;
@@ -19,17 +22,81 @@ void item_create(Item* it, int type)
 	else
 		it->texture = TEX_NOTHING;
 }
-void item_add_type(Item* it, long stype)
+void item_add_sub_type(struct Item* it, long stype)
 {
 	it->sub_type |= stype;
 }
-int item_check_type(Item* it, long stype)
+int item_check_sub_type(struct Item* it, long stype)
 {
 	if (it->sub_type & stype)
 		return 0;
 	return 1;
 }
-void item_draw(Item* it, float dt)
+int item_use(struct Creature* creat, struct Item* item)
+{
+	if (item->type == ITM_HAND)
+	{
+		set_animation(&(item->anim), ANM_PUNCH);
+		struct Action* punch;
+		action_create(&punch, ACT_PUNCH);
+		struct ActionObject* user;
+		action_obj_create(&user, ACT_OBJ_CREATURE);
+		user->creature = creat;
+		action_add(punch, user, ACT_ROLE_USER);
+		struct ActionObject* timer;
+		action_obj_create(&timer, ACT_OBJ_FLOAT);
+		timer->fvalue = 0.0f;
+		action_add(punch, timer, ACT_ROLE_TIMER);
+		struct ActionObject* maxTime;
+		action_obj_create(&maxTime, ACT_OBJ_FLOAT);
+		maxTime->fvalue = 0.3f;
+		action_add(punch, maxTime, ACT_ROLE_ACTIVATE);
+		game_add_action(&(mainGame->acts), punch);
+	}
+}
+
+void item_draw_world(struct Item* it, float viewAngle, float dt)
+{
+	if (it->anim != NULL)
+	{
+		step_animation(it->anim, dt);
+		load_texture(it->anim->currentFrame->texture);
+	}else
+	{
+		load_texture(it->texture);
+	}
+	glPushMatrix();
+	glTranslatef(it->world_pos.x*CREATURE_WIDTH*2, 0.0f, it->world_pos.y*CREATURE_HEIGHT*2);
+	glRotatef(-viewAngle, 0.0f, 1.0f, 0.0f);
+	glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+	glBegin(GL_QUADS);
+	glTexCoord2f (0, 0);
+	glVertex3f(
+		-CREATURE_WIDTH,
+		-CREATURE_DEPTH,
+		-CREATURE_HEIGHT);
+	glTexCoord2f (0, 1);
+	glVertex3f(
+		-CREATURE_WIDTH,
+		-CREATURE_DEPTH,
+		CREATURE_HEIGHT);
+	glTexCoord2f (1, 1);
+	glVertex3f(
+		CREATURE_WIDTH,
+		-CREATURE_DEPTH,
+		CREATURE_HEIGHT);
+	glTexCoord2f (1, 0);
+	glVertex3f(
+		CREATURE_WIDTH,
+		-CREATURE_DEPTH,
+		-CREATURE_HEIGHT);
+	glEnd();
+	glPopMatrix();
+
+
+}
+
+void item_draw(struct Item* it, float dt)
 {
 	glLoadIdentity();
 	if (it->anim != NULL)

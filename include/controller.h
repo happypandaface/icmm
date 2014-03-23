@@ -13,14 +13,13 @@
 #define MOVE_SPEED 10.0f
 #define TURN_SPEED 5.0f
 
-Creature* controlled;
 
 int punching;
 
 float getCameraAngle();
 void updateController(float dt);
 void controlCamera();
-void controlObject(Creature *go);
+void controlObject(struct Creature *go);
 void controller_init();
 void normalUp(unsigned char key, int x, int y);
 void normalDown(unsigned char key, int x, int y);

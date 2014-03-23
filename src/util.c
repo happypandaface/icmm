@@ -63,3 +63,23 @@ float pos_most(Pos2 p)
 		return p.y;
 	return p.x;
 }
+float nor_rad(float a)
+{
+	float a_rad = a;
+	while (a_rad > M_PI)
+		a_rad -= M_PI*2.0f;
+	while (a_rad < -M_PI)
+		a_rad += M_PI*2.0f;
+	return a_rad;
+}
+float compare_rad(float a1, float a2)
+{
+	float a1_nor = nor_rad(a1);
+	float a2_nor = nor_rad(a2);
+	float diff1 = a1_nor - a2_nor;
+	float diff2 = a2_nor - a1_nor;
+	if (abs(diff1) < abs(diff2))
+		return diff1;
+	else
+		return diff2;
+}
