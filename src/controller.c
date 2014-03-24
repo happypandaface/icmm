@@ -166,9 +166,9 @@ void normalDown(unsigned char key, int x, int y)
 {
 	if (key == 32)
 	{
-		if (controlled->inv->item->anim == NULL)
+		if (controlled->items->elem->anim == NULL)
 		{
-			item_use(controlled, controlled->inv->item);
+			item_use(controlled, controlled->items->elem);
 		}
 	}
 }

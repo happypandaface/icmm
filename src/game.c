@@ -70,9 +70,9 @@ void game_init(struct icmmGame* game)
 	
 	game->player = malloc(sizeof(*(game->player)));
 	creature_create(game->player, TYP_PLAYER);
-	game->player->inv = malloc(sizeof(*game->player->inv));
-	game->player->inv->item = malloc(sizeof(*game->player->inv->item));
-	item_create(game->player->inv->item, ITM_HAND);
+	game->player->items = malloc(sizeof(*game->player->items));
+	game->player->items->elem = malloc(sizeof(*game->player->items->elem));
+	item_create(game->player->items->elem, ITM_HAND);
 	
 	controlObject(game->player);
 	

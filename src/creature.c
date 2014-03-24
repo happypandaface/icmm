@@ -50,7 +50,7 @@ void creature_draw(struct Creature* go, float viewAngle, float dt)
 int creature_create(struct Creature* c, int type)
 {
 	c->type = type;
-	c->inv = NULL;
+	c->items = NULL;
 	c->damage = malloc(sizeof(*(c->damage)));
 	if (type == TYP_GAS_BALL)
 	{

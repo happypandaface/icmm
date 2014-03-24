@@ -29,7 +29,7 @@ struct Creature
 	long sub_type;	// if there's more than 32 subtypes, add sub_type2 and change
 					// creature_add_sub_type and the check function
 	Pos2 pos;
-	struct InvSlot* inv;
+	struct ItemElement* items;
 	float angle;
 	AnimationInstance* animInst;
 	int texture;
