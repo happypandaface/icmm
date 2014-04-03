@@ -31,8 +31,6 @@ void game_init(struct icmmGame* game);
 void game_add_action(struct ActionElement** elems, struct Action* act);
 void game_add_tile(struct TileElement** elems, struct Tile* tile);
 void game_add_creature(struct CreatureElement** elems, struct Creature* tile);
-void game_add_item(struct ItemElement** elems, struct Item* it);
-void game_remove_item(struct ItemElement** elems, struct Item* it);
 void game_remove_creature(struct icmmGame* game, struct Creature* creat);
 
 #endif

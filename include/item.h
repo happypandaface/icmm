@@ -10,6 +10,7 @@ struct ItemElement;
 #define ITM_NOTHING 0
 #define ITM_HAND 1
 #define ITM_MM 2
+#define ITM_BLUE_JELLY 3
 
 #define SITM_EXISTS 1 << 0
 #define SITM_IN_WORLD 1 << 1// meaning in the level, not in inventory
@@ -33,10 +34,12 @@ struct Item
 
 void item_create(struct Item* it, int type);
 void item_add_sub_type(struct Item* it, long stype);
+void item_remove_sub_type(struct Item* it, long stype);
 int item_check_sub_type(struct Item* it, long stype);
 void item_draw(struct Item* it, float dt);
 void item_draw_world(struct Item* it, float view, float dt);
 int item_use(struct Creature* creat, struct Item* item);
-void item_add_to_items(struct ItemElement**, struct Item* it);
+void items_add_item(struct ItemElement** elems, struct Item* it);
+void items_remove_item(struct ItemElement** elems, struct Item* it);
 
 #endif

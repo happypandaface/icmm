@@ -131,6 +131,17 @@ int action_perform(struct Action* act, struct icmmGame* game, float dt)
 			fprintf(stderr,"health left: %f\n", health);
 			if (health <= 0)
 			{
+				struct ItemElement* creatItems = target->creature->items;
+				while (creatItems != NULL)
+				{
+					struct Item* it = creatItems->elem;
+					it->world_pos.x = target->creature->pos.x;
+					it->world_pos.y = target->creature->pos.y;
+					item_add_sub_type(it, SITM_IN_WORLD);
+					items_add_item(&(game->items), it);
+					items_remove_item(&(target->creature->items), it);
+					creatItems = creatItems->next;
+				}
 				game_remove_creature(game, target->creature);
 			}
 			return 1;
@@ -176,7 +187,6 @@ int action_perform(struct Action* act, struct icmmGame* game, float dt)
 					float dist = -1.0f;
 					while (currCreat != NULL)
 					{
-						pos_print(currCreat->creature->pos);
 						Pos2 distPos;
 						pos_sub(currCreat->creature->pos, user->creature->pos, &distPos);
 						float currDist = pos_len(distPos);

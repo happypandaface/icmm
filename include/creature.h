@@ -47,5 +47,6 @@ void creature_draw(struct Creature* go, float viewAngle, float dt);
 int creature_create(struct Creature* c, int type);
 int creature_check_sub_type(struct Creature* go, long stype);
 int creature_add_sub_type(struct Creature* go, long stype);
+int creature_get_near(struct ItemElement* items, struct Creature* creat, struct Item* last, float dist, struct ItemElement** rtn);
 
 #endif

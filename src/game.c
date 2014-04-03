@@ -70,7 +70,10 @@ void game_init(struct icmmGame* game)
 	
 	game->player = malloc(sizeof(*(game->player)));
 	creature_create(game->player, TYP_PLAYER);
+	game->player->pos.x = 0;
+	game->player->pos.y = 0;
 	game->player->items = malloc(sizeof(*game->player->items));
+	game->player->items->next = NULL;
 	game->player->items->elem = malloc(sizeof(*game->player->items->elem));
 	item_create(game->player->items->elem, ITM_HAND);
 	
@@ -78,7 +81,6 @@ void game_init(struct icmmGame* game)
 	
 	generateLevel(&(game->tiles), NUM_TILES, &(game->creatures), NUM_CREATURES, &(game->acts));
 	
-	printf("game init'd\n");
 }
 
 void game_add_action(struct ActionElement** elems, struct Action* act)
@@ -93,9 +95,7 @@ void game_add_tile(struct TileElement** elems, struct Tile* elem)
 {
 	struct TileElement* elemObj = malloc(sizeof(*elemObj));
 	elemObj->elem = elem;
-	printf("about to blow!\n");
 	elemObj->next = *elems;
-	pos_print(elemObj->elem->pos);
 	(*elems) = elemObj;
 }
 
@@ -104,7 +104,6 @@ void game_add_creature(struct CreatureElement** elems, struct Creature* elem)
 	struct CreatureElement* elemObj = malloc(sizeof(*elemObj));
 	elemObj->elem = elem;
 	elemObj->next = *elems;
-	pos_print(elemObj->elem->pos);
 	(*elems) = elemObj;
 }
 

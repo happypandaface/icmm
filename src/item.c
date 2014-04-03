@@ -20,11 +20,18 @@ void item_create(struct Item* it, int type)
 	if (type == ITM_HAND)
 		it->texture = TEX_FIST;
 	else
+	if (type == ITM_BLUE_JELLY)
+		it->texture = TEX_DEAD_JELLY;
+	else
 		it->texture = TEX_NOTHING;
 }
 void item_add_sub_type(struct Item* it, long stype)
 {
 	it->sub_type |= stype;
+}
+void item_remove_sub_type(struct Item* it, long stype)
+{
+	it->sub_type &= ~stype;
 }
 int item_check_sub_type(struct Item* it, long stype)
 {
@@ -137,4 +144,26 @@ void item_draw(struct Item* it, float dt)
 		-10.0f);
 	glEnd();
 	glPopMatrix();
+}
+void items_add_item(struct ItemElement** elems, struct Item* newElem)
+{
+	struct ItemElement* elemHolder = malloc(sizeof(*elemHolder));
+	elemHolder->elem = newElem;
+	elemHolder->next = *elems;
+	(*elems) = elemHolder;
+}
+void items_remove_item(struct ItemElement** elems, struct Item* it)
+{
+	if ((*elems)->elem == it)
+	{
+		(*elems) = (*elems)->next;
+	}else
+	{
+		struct ItemElement* itElem = (*elems);
+		while(itElem->next->elem != it)
+			itElem = itElem->next;
+		itElem->next = itElem->next->next;
+	}
+	// should free the memory for the ItemElement created with
+	// 		items_add_item
 }

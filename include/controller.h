@@ -13,6 +13,12 @@
 #define MOVE_SPEED 10.0f
 #define TURN_SPEED 5.0f
 
+// The controller should maybe have a struct?
+// the punching variable isn't used anymore.
+// the controller sets up the camera to the
+// perspective of the controlled object
+// (which is set through the method "controlObject"
+// 
 
 int punching;
 

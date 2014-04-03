@@ -4,9 +4,32 @@
 #include <GL/gl.h>
 #include <GL/freeglut.h>
 #include <math.h>
+#include <stdio.h>
 
 #include "animation.h"
 #include "textures.h"
+#include "item.h"
+
+int creature_get_near(struct ItemElement* items, struct Creature* creat, struct Item* last, float dist, struct ItemElement** rtn)
+{
+	int numNear = 0;
+	struct ItemElement* currItem = items;
+	while (currItem != NULL)
+	{
+		if (item_check_sub_type(currItem->elem, SITM_IN_WORLD) == 0)
+		{
+			Pos2 dst;
+			pos_sub(creat->pos, currItem->elem->world_pos, &dst);
+			if (pos_len(dst) < dist)
+			{
+				(*rtn) = currItem;
+				++numNear;
+			}
+		}
+		currItem = currItem->next;
+	}
+	return numNear;
+}
 
 void creature_draw(struct Creature* go, float viewAngle, float dt)
 {

@@ -27,5 +27,8 @@ void load_texture(int tex)
 		case TEX_BLUE_JELLY_2:
 			glBindTexture(GL_TEXTURE_2D, bJelly2Texture);
 			break;
+		case TEX_DEAD_JELLY:
+			glBindTexture(GL_TEXTURE_2D, dJellyTexture);
+			break;
 	}
 }

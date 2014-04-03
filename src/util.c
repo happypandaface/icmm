@@ -3,6 +3,11 @@
 #include <math.h>
 #include <stdio.h>
 
+void create_pos(Pos2* pos)
+{
+	pos->x = 0;
+	pos->y = 0;
+}
 void pos_sub(Pos2 p1, Pos2 p2, Pos2 *rtn)
 {
 	rtn->x = p1.x - p2.x;
@@ -31,6 +36,12 @@ void pos_nor(Pos2 p, Pos2 *rtn)
 	rtn->y = p.y/len;
 }
 
+void pos_flr(Pos2 p, Pos2 *rtn)
+{
+	rtn->x = floor(p.x);
+	rtn->y = floor(p.y);
+}
+
 void pos_mul(Pos2 p, float factor, Pos2 *rtn)
 {
 	rtn->x = p.x*factor;
@@ -41,6 +52,12 @@ void pos_add(Pos2 p1, Pos2 p2, Pos2 *rtn)
 {
 	rtn->x = p1.x+p2.x;
 	rtn->y = p1.y+p2.y;
+}
+
+void pos_cpy(Pos2 p, Pos2* rtn)
+{
+	rtn->x = p.x;
+	rtn->y = p.y;
 }
 
 void pos_print(Pos2 p)

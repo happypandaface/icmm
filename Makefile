@@ -5,6 +5,7 @@ base:
 	cc -c -g -o bin/gaseousBall2.o src/images/gaseousBall2.c -I./include
 	cc -c -g -o bin/blueJelly.o src/images/blueJelly.c -I./include
 	cc -c -g -o bin/blueJelly2.o src/images/blueJelly2.c -I./include
+	cc -c -g -o bin/deadJelly.o src/images/deadJelly.c -I./include
 	cc -c -g -o bin/punchFist.o src/images/punchFist.c -I./include
 	cc -c -g -o bin/levelGenerator.o src/levelGenerator.c -I./include
 	cc -c -g -o bin/game.o src/game.c -I./include
